@@ -14,6 +14,7 @@
 		DE9169C01CD90D230078D35B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DE9169BE1CD90D230078D35B /* LaunchScreen.storyboard */; };
 		DE9169CB1CD90D230078D35B /* iQuizTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9169CA1CD90D230078D35B /* iQuizTests.swift */; };
 		DE9169D61CD90D230078D35B /* iQuizUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9169D51CD90D230078D35B /* iQuizUITests.swift */; };
+		DE9169E81CD91B8E0078D35B /* QuizOptionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9169E71CD91B8E0078D35B /* QuizOptionTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +48,7 @@
 		DE9169D11CD90D230078D35B /* iQuizUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iQuizUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE9169D51CD90D230078D35B /* iQuizUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iQuizUITests.swift; sourceTree = "<group>"; };
 		DE9169D71CD90D230078D35B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DE9169E71CD91B8E0078D35B /* QuizOptionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuizOptionTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,6 +105,7 @@
 				DE9169BC1CD90D230078D35B /* Assets.xcassets */,
 				DE9169BE1CD90D230078D35B /* LaunchScreen.storyboard */,
 				DE9169C11CD90D230078D35B /* Info.plist */,
+				DE9169E71CD91B8E0078D35B /* QuizOptionTableViewCell.swift */,
 			);
 			path = iQuiz;
 			sourceTree = "<group>";
@@ -257,6 +260,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DE9169B81CD90D230078D35B /* ViewController.swift in Sources */,
+				DE9169E81CD91B8E0078D35B /* QuizOptionTableViewCell.swift in Sources */,
 				DE9169B61CD90D230078D35B /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
