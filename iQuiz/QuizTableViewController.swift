@@ -19,15 +19,23 @@ class QuizTableViewController: UITableViewController {
         loadQuizzes()
     }
     
+    @IBAction func alertSettings(sender: AnyObject) {
+        let alertController = UIAlertController(title: "Settings", message:
+            "Settings go here", preferredStyle: UIAlertControllerStyle.Alert)
+        alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default,handler: nil))
+        
+        self.presentViewController(alertController, animated: true, completion: nil)
+    }
+    
     func loadQuizzes() {
         let photo1 = UIImage(named: "marvel")!
-        let quiz1 = Quiz(name: "Marvel", photo: photo1, description: "How well do you know your super heroes?")
+        let quiz1 = Quiz(name: "Marvel", photo: photo1, description: "How well do you know \nyour super heroes?")
         
         let photo2 = UIImage(named: "math")!
         let quiz2 = Quiz(name: "Math", photo: photo2, description: "All things math!")
         
         let photo3 = UIImage(named: "science")!
-        let quiz3 = Quiz(name: "Science", photo: photo3, description: "This quiz is about science, not just the magic school bus")
+        let quiz3 = Quiz(name: "Science", photo: photo3, description: "Science trivia level 100")
         
         quizzes += [quiz1, quiz2, quiz3]
     }
@@ -53,6 +61,9 @@ class QuizTableViewController: UITableViewController {
         cell.quizLabel.text = quiz.name
         cell.quizImage.image = quiz.photo
         cell.quizDescription.text = quiz.description
+        cell.quizDescription.lineBreakMode = NSLineBreakMode.ByWordWrapping
+        cell.quizDescription.numberOfLines = 0
+        cell.quizDescription.sizeToFit()
 
         return cell
     }
