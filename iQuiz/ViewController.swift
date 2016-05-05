@@ -14,7 +14,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var quizList: UITableView!
 
     override func viewDidLoad() {
-        super.viewDidLoadter()
+        super.viewDidLoad()
     }
 
     override func didReceiveMemoryWarning() {

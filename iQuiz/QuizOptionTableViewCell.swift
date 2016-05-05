@@ -9,8 +9,11 @@
 import UIKit
 
 class QuizOptionTableViewCell: UITableViewCell {
+    // MARK: Properties
     
-    var name : String = ""
+    @IBOutlet weak var quizLabel: UILabel!
+    @IBOutlet weak var quizImage: UIImageView!
+    @IBOutlet weak var quizDescription: UILabel!
 
     override func awakeFromNib() {
         super.awakeFromNib()
