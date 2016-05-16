@@ -1,82 +1,83 @@
 //
-//  QuizTableViewController.swift
+//  QuestionTableViewController.swift
 //  iQuiz
 //
-//  Created by Quynh Huynh on 5/5/16.
+//  Created by Quynh Huynh on 5/15/16.
 //  Copyright © 2016 quhuynh. All rights reserved.
 //
 
 import UIKit
-import Alamofire
 import SwiftyJSON
 
-class QuizTableViewController: UITableViewController {
-    // MARK: Properties
-    
-    var quizzes = [Quiz]()
-    let defaults = NSUserDefaults.standardUserDefaults()
+class QuestionTableViewController: UITableViewController {
+    var quizChoice : Int = 0
+    var answers : [String] = []
+    var currentQuestion : Int = 0
+    var correctAnswer : Int = 0
+    var totalQuestions = 0
 
+    @IBOutlet weak var questionText: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        getQuizData("http://tednewardsandbox.site44.com/questions.json")
-    }
-    
-    func getQuizData(url : String) {
-        Alamofire.request(.GET, url).validate()
-            .responseJSON { response in
-                self.defaults.setObject(response.result.value!, forKey: "data")
-                // add quizzes to main window
-                for quiz in JSON(response.result.value!).array! {
-                    let title = String(quiz["title"])
-                    let desc = String(quiz["desc"])
-                    let quizPhoto = UIImage(named: title)!
-                    let quizItem = Quiz(name: title, photo: quizPhoto, description: desc)
-                    self.quizzes.append(quizItem)
-                }
-                self.tableView.reloadData()
+        let defaults = NSUserDefaults.standardUserDefaults()
+        let json = JSON(defaults.objectForKey("data")!)
+        let questions = json[quizChoice]["questions"]
+        totalQuestions = questions.count
+        answers = []
+        questionText.text = String(questions[currentQuestion]["text"])
+        correctAnswer = Int(questions[currentQuestion]["answer"].stringValue)! - 1
+            
+        for (_, answer) in questions[currentQuestion]["answers"] {
+            answers.append(String(answer))
         }
-    }
-    
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        let secondVC : QuestionTableViewController = segue.destinationViewController as! QuestionTableViewController
-        secondVC.quizChoice = tableView.indexPathForSelectedRow!.row
-    }
-    
-    @IBAction func alertSettings(sender: AnyObject) {
-        let alertController = UIAlertController(title: "Settings", message:
-            "Settings go here", preferredStyle: UIAlertControllerStyle.Alert)
-        alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default,handler: nil))
-        
-        self.presentViewController(alertController, animated: true, completion: nil)
+        self.tableView.reloadData()
+
+        // Uncomment the following line to preserve selection between presentations
+        // self.clearsSelectionOnViewWillAppear = false
+
+        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
+        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
     }
 
     // MARK: - Table view data source
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        // #warning Incomplete implementation, return the number of sections
         return 1
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return quizzes.count
+        // #warning Incomplete implementation, return the number of rows
+        return answers.count
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("QuizOptionTableViewCell", forIndexPath: indexPath) as! QuizOptionTableViewCell
-        let quiz = quizzes[indexPath.row]
-        cell.quizLabel.text = quiz.name
-        cell.quizImage.image = quiz.photo
-        cell.quizDescription.text = quiz.description
-        cell.quizDescription.lineBreakMode = NSLineBreakMode.ByWordWrapping
-        cell.quizDescription.numberOfLines = 0
-        cell.quizDescription.sizeToFit()
-
+        let cell = tableView.dequeueReusableCellWithIdentifier("AnswerTableViewCell", forIndexPath: indexPath) as! AnswerTableViewCell
+        cell.answerText.text = answers[indexPath.row]
+        
         return cell
     }
-
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        let secondVC : AnswerViewController = segue.destinationViewController as! AnswerViewController
+        secondVC.choice = tableView.indexPathForSelectedRow!.row
+        secondVC.answers = self.answers
+        secondVC.correctChoice = correctAnswer
+        secondVC.currentQuestion = currentQuestion
+        if(tableView.indexPathForSelectedRow!.row == correctAnswer) {
+            secondVC.correct = true
+        }
+        secondVC.quizChoice = quizChoice
+        secondVC.totalQuestions = totalQuestions
+        
+    }
+    
     /*
     // Override to support conditional editing of the table view.
     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
